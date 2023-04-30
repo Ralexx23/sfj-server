@@ -4,8 +4,8 @@ import zoderr from "../utils/zoderr";
 import { ObjectId } from "mongodb";
 
 export const scoresZod = z.object({
-  user: z.string().transform((val) => new ObjectId(val)),
-  games: z.string().uuid().nullish(),
+  user: z.union([z.string(), z.instanceof(ObjectId)]),
+  games: z.union([z.string(), z.instanceof(ObjectId)]),
   score: z.object({
     total: z.number().optional(),
     correct: z.number().optional(),

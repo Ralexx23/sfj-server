@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import ScoresModel from "../models/scores.models";
+import UsersModel from "../models/user.models";
+import GamesModel from "../models/games.models";
 
 //Function of the route: Get
 export const getScores = async (_req: Request, res: Response) => {
@@ -12,8 +14,18 @@ export const getScores = async (_req: Request, res: Response) => {
 
 //Function of the route: Post
 export const postScores = async (req: Request, res: Response) => {
+  //Check if users and games exists
+  const [user, game] = await Promise.all([
+    UsersModel.findById(req.body.scores.user),
+    GamesModel.findById(req.body.scores.games),
+  ]);
+
+  if (!user || !game) {
+    console.log("user or game doesn't exists");
+    res.status(400).send({ msg: "user or game doesn't exists" });
+    return;
+  }
   const scores = new ScoresModel(req.body.scores);
-  console.log(req.body.scores);
   const check = scores.VerifySchema();
   if (!check.success) {
     console.log("scores data is not valid");
@@ -21,14 +33,6 @@ export const postScores = async (req: Request, res: Response) => {
     res
       .status(400)
       .send({ msg: "scores data is not valid", err: check.errors });
-    return;
-  }
-
-  //Check if the games already exists
-  const scoreExists = await ScoresModel.findOne({ title: scores.user });
-  if (scoreExists) {
-    console.log("scores already exists");
-    res.status(400).send({ msg: "scores already exists" });
     return;
   }
 

@@ -4,7 +4,6 @@ import GamesModel from "../models/games.models";
 //Function of the route: Get
 export const getGames = async (_req: Request, res: Response) => {
   const games = await GamesModel.find();
-  console.log(games);
   res
     .status(200)
     .send({ msg: "games", games: games.map((games) => games.ToClient()) });

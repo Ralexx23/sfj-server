@@ -11,7 +11,10 @@ let GamesSchema = new mongoose.Schema<gamesDocument>({
     {
       question: { type: String, required: false },
       image: { type: String, required: false },
-      answer: { type: String, required: false },
+      answer: { type: String, required: false } || {
+        type: Boolean,
+        required: false,
+      },
       options: { type: [String], required: false },
       value: { type: Number, required: false },
     },

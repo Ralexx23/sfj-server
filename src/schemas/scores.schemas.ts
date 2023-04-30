@@ -3,8 +3,14 @@ import zoderr from "../utils/zoderr";
 import mongoose from "mongoose";
 
 let ScoresSchema = new mongoose.Schema<scoresDocument>({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "users" },
-  games: { type: mongoose.Schema.Types.ObjectId, ref: "games" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "users" } || {
+    type: String,
+    required: true,
+  },
+  games: { type: mongoose.Schema.Types.ObjectId, ref: "games" } || {
+    type: String,
+    required: true,
+  },
   score: {
     total: { type: Number, required: true },
     correct: { type: Number, required: true },
