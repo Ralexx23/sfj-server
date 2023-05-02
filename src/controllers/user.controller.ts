@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import UserModel from "../models/user.models";
+import Encrypt from "../utils/encrypt";
 
 //Function of the route: Get
 export const getUsers = async (_req: Request, res: Response) => {
@@ -25,7 +26,8 @@ export const postUser = async (req: Request, res: Response) => {
         res.status(400).send({ msg: 'user already exists' });
         return;
     }
-
+    
+    user.password = await Encrypt.hash(user.password);
     await user.save();
     res.status(200).send({ msg: 'user created', user: user.ToClient() });
 };
