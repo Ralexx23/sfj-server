@@ -5,12 +5,11 @@ import {
   putGames,
   deleteGames,
 } from "../controllers/games.controller";
-import multer from "../libs/multer";
 
 const router = Router();
 
 router.get("/", getGames);
-router.post("/", multer.single("image"), postGames);
+router.post("/", postGames);
 router.put("/", putGames);
 router.delete("/", deleteGames);
 

@@ -48,9 +48,10 @@ export const Login = async (req: custReq, res: Response) => {
   });
 };
 
-export const GetAuth = (req: custReq, res: Response) => {
+export const GetAuth = async (req: custReq, res: Response) => {
+  const user = await UserModel.findOne({ user: req.user.user.user });
   return res.json({
-    user: req.user,
+    user: user?.ToClient(),
     msg: "Auth Data",
   });
 };
