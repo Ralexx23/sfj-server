@@ -13,6 +13,7 @@ export const getGames = async (_req: Request, res: Response) => {
 export const postGames = async (req: Request, res: Response) => {
   const games = new GamesModel(req.body.games);
   const check = games.VerifySchema();
+
   if (!check.success) {
     console.log("games data is not valid");
     console.log(check.errors);
@@ -69,21 +70,27 @@ export const putGames = async (req: Request, res: Response) => {
 
 //Function of the route: Delete
 export const deleteGames = async (req: Request, res: Response) => {
-  if (!req.body.games.id) {
+  if (!req.params.id) {
     console.log("no id provided");
     res.status(400).send({ msg: "no id provided" });
     return;
   }
 
+  if (req.params.id.length !== 24) {
+    console.log("id not valid");
+    res.status(400).send({ msg: "id not valid" });
+    return;
+  }
+
   // Check if the question not exists
-  const gameExists = await GamesModel.findById(req.body.games.id);
+  const gameExists = await GamesModel.findById(req.params.id);
   if (!gameExists) {
     console.log("game doesn't exists");
     res.status(400).send({ msg: "game doesn't exists" });
     return;
   }
 
-  await GamesModel.deleteOne({ _id: req.body.games.id });
+  await GamesModel.deleteOne({ _id: req.params.id });
   res.status(200).send({ msg: "game deleted" });
   return;
 };

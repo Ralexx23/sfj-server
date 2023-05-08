@@ -11,6 +11,6 @@ const router = Router();
 router.get("/", getGames);
 router.post("/", postGames);
 router.put("/", putGames);
-router.delete("/", deleteGames);
+router.delete("/:id", deleteGames);
 
 export default router;
