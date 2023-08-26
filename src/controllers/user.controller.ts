@@ -12,8 +12,8 @@ export const getUsers = async (_req: Request, res: Response) => {
 
 //Function of the route: Post
 export const postUser = async (req: Request, res: Response) => {
-  console.log(req.body.users);
-  const user = new UserModel(req.body.users);
+  console.log(req.body.user);
+  const user = new UserModel(req.body.user);
   const check = user.VerifySchema();
   if (!check.success) {
     console.log("user data is not valid");
@@ -38,21 +38,21 @@ export const postUser = async (req: Request, res: Response) => {
 
 //Function of the route: Put
 export const putUsers = async (req: Request, res: Response) => {
-  if (!req.body.users.id) {
+  if (!req.body.user.id) {
     console.log("no id provided");
     res.status(400).send({ msg: "no id provided" });
     return;
   }
 
   // Check if the user already exists
-  const userExists = await UserModel.findById(req.body.users.id);
+  const userExists = await UserModel.findById(req.body.user.id);
   if (!userExists) {
     console.log("user doesn't exists");
     res.status(400).send({ msg: "user doesn't exists" });
     return;
   }
 
-  const updata = req.body.users;
+  const updata = req.body.user;
   updata.pasaword = userExists.password;
   const check = userExists.VerifySchema(updata);
   if (!check.success) {

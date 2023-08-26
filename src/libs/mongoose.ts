@@ -1,9 +1,9 @@
 import mongoose, { ConnectOptions, Mongoose } from "mongoose";
 
 function CreateOptions(): any {
-  //const MONGO_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOST}/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
+  const MONGO_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@${process.env.MONGO_HOST}/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
   //const MONGO_URI = `mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+1.6.1`;
-  const MONGO_URI = `mongodb://127.0.0.1:27017/sfj`;
+  //const MONGO_URI = `mongodb://127.0.0.1:27017/sfj`;
   //const MONGO_URI = `mongodb://${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}`;
   const options: any = {
     useNewUrlParser: true,
